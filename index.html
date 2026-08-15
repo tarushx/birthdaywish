@@ -1,0 +1,553 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday 🎂</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #ffd6e8, #d9c2ff, #b8e8ff);
+      color: #333;
+    }
+
+    /* ---------- FIRST PAGE ---------- */
+
+    #birthdayQuestion {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: min(600px, 95%);
+      padding: 50px 30px;
+      background: rgba(255, 255, 255, 0.82);
+      border-radius: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
+      animation: appear 1.2s ease;
+    }
+
+    .cake {
+      font-size: 80px;
+      animation: bounce 2s infinite;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      margin: 15px 0;
+      color: #e94f91;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      margin: 15px 0 30px;
+      color: #555;
+    }
+
+    .buttons {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 30px;
+      min-height: 60px;
+    }
+
+    button {
+      border: none;
+      padding: 15px 35px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+      font-weight: bold;
+    }
+
+    #yesBtn {
+      background: #ff4f91;
+      color: white;
+      box-shadow: 0 8px 20px rgba(255, 79, 145, 0.4);
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+      background: #ff2879;
+    }
+
+    #noBtn {
+      background: #ddd;
+      color: #555;
+      position: relative;
+    }
+
+    #noBtn:hover {
+      transform: translateX(80px);
+    }
+
+    .hint {
+      margin-top: 25px;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    /* ---------- SECOND PAGE ---------- */
+
+    #birthdayPage {
+      display: none;
+      min-height: 100vh;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .birthday-title {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      color: #e94087;
+      animation: appear 1s ease;
+    }
+
+    .message {
+      margin: 10px auto 40px;
+      font-size: 1.3rem;
+      color: #555;
+    }
+
+    /* ---------- PHOTO GALLERY ---------- */
+
+    .gallery {
+      max-width: 1000px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .photo {
+      background: white;
+      padding: 10px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      transition: transform 0.4s ease;
+    }
+
+    .photo:hover {
+      transform: translateY(-10px) rotate(1deg);
+    }
+
+    .photo img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 15px;
+      display: block;
+    }
+
+    /* ---------- LETTER ---------- */
+
+    .letter {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 45px;
+      background: #fffdf7;
+      border-radius: 10px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+      text-align: left;
+      position: relative;
+      line-height: 1.8;
+      font-family: Georgia, serif;
+    }
+
+    .letter::before {
+      content: "🎀";
+      position: absolute;
+      top: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 55px;
+    }
+
+    .letter h2 {
+      text-align: center;
+      color: #d94b86;
+      margin-bottom: 25px;
+    }
+
+    .letter p {
+      margin-bottom: 18px;
+      font-size: 1.1rem;
+    }
+
+    .signature {
+      text-align: right;
+      font-size: 1.2rem;
+      margin-top: 30px;
+      color: #d94b86;
+    }
+
+  
+    /* ---------- CONFETTI ---------- */
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -20px;
+      z-index: 999;
+      animation: fall 3s linear forwards;
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 40px 20px;
+      }
+
+      .letter {
+        padding: 35px 25px;
+      }
+
+      .photo img {
+        height: 240px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================= -->
+  <!-- FIRST PAGE -->
+  <!-- ============================= -->
+
+  <section id="birthdayQuestion">
+
+    <div class="card">
+
+      <div class="cake">🎂</div>
+
+      <h1>Hey, Birthday rudra!🎀</h1>
+
+      <p class="subtitle">
+        I have a little birthday surprise waiting for you...
+        <br><br>
+        Are you ready to see it? 👀
+      </p>
+
+      <div class="buttons">
+
+        <button id="yesBtn">
+          ✨YES!✨
+        </button>
+
+        <button id="noBtn">
+          No 😶
+        </button>
+
+      </div>
+
+      <p class="hint">
+        (TRY choosing no😒 😌)
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================= -->
+  <!-- SECOND PAGE -->
+  <!-- ============================= -->
+
+  <section id="birthdayPage">
+
+    <h1 class="birthday-title">
+      🎉 HAPPY BIRTHDAY! 🎉
+    </h1>
+
+    <p class="message">
+      To someone who makes the world a little brighter just by being in it 🎀
+    </p>
+
+
+    <!-- ============================= -->
+    <!-- PHOTO GALLERY -->
+    <!-- ============================= -->
+
+    <div class="gallery">
+
+      <!-- Replace these with your own photos -->
+
+      <div class="photo">
+        <img src="photo1.jpg" alt="A special memory">
+      </div>
+
+      <div class="photo">
+        <img src="photo2.jpg" alt="A special memory">
+      </div>
+
+      <div class="photo">
+        <img src="photo3.jpg" alt="A special memory">
+      </div>
+
+      <div class="photo">
+        <img src="photo4.jpg" alt="A special memory">
+      </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- BIRTHDAY LETTER -->
+    <!-- ============================= -->
+
+    <div class="letter">
+
+      <h2>💌 A Little Birthday Letter</h2>
+
+      <p>
+        respected bhondu,
+      </p>
+
+      <p>
+       🎀 Happy Birthday!🎀
+      </p>
+
+      <p>
+        Today is a special day because it's the day someone
+        incredibly wonderful(and dumb) came into this world.
+      </p>
+
+      <p>
+        I just wanted to take a moment to say how grateful I am
+        to have you as my friend. Thank you for all the laughs,
+        memories, conversations, and all the little moments that
+        somehow became some of my favorite memories.
+      </p>
+
+      <p>
+        I hope this new year of your life brings you countless
+        reasons to smile, exciting adventures, wonderful memories,
+        and everything you've been wishing for.
+      </p>
+
+      <p>
+        Never forget how amazing you are and how many people are
+        lucky to have you in their lives. and im sorry for sometimes being a littlr difficult to be around buuuuttttttt thats okay right???????????????🔪😊
+      </p>
+
+      <p>
+        So today, forget the worries, eat lots of cake 🍰,
+        smile as much as possible, and enjoy your day because
+        you absolutely deserve it!
+      </p>
+
+      <p>
+        Once again...
+        <br>
+        <strong>Happy Birthday bhondu! 🎀✨</strong>
+      </p>
+
+      <p class="signature">
+        With lov,<br>
+       tarushi 😃
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <script>
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+
+    const firstPage = document.getElementById("birthdayQuestion");
+    const secondPage = document.getElementById("birthdayPage");
+
+
+    // ==============================
+    // YES BUTTON
+    // ==============================
+
+    yesBtn.addEventListener("click", function () {
+
+      firstPage.style.display = "none";
+      secondPage.style.display = "block";
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+      createConfetti();
+
+      // Start floating hearts
+      setInterval(createHeart, 500);
+
+    });
+
+
+    // ==============================
+    // NO BUTTON
+    // ==============================
+
+    // Prevent the No button from doing anything
+
+    noBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      // Move the button somewhere else
+      moveNoButton();
+    });
+
+
+    noBtn.addEventListener("mouseover", function () {
+      moveNoButton();
+    });
+
+
+    function moveNoButton() {
+
+      const maxX = window.innerWidth - noBtn.offsetWidth - 30;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 30;
+
+      const x = Math.random() * Math.max(maxX, 30);
+      const y = Math.random() * Math.max(maxY, 30);
+
+      noBtn.style.position = "fixed";
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+
+    // ==============================
+    // CONFETTI
+    // ==============================
+
+    function createConfetti() {
+
+      const symbols = ["🎉", "🎊", "✨", "🎈"];
+
+      for (let i = 0; i < 80; i++) {
+
+        const confetti = document.createElement("div");
+
+        confetti.className = "confetti";
+
+        confetti.innerHTML =
+          symbols[Math.floor(Math.random() * symbols.length)];
+
+        confetti.style.left =
+          Math.random() * 100 + "vw";
+
+        confetti.style.fontSize =
+          Math.random() * 15 + 10 + "px";
+
+        confetti.style.animationDuration =
+          Math.random() * 2 + 2 + "s";
+
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+          confetti.remove();
+        }, 4000);
+      }
+    }
+
+
+    // ==============================
+    // FLOATING HEARTS
+    // ==============================
+
+    function createHeart() {
+
+      // Don't create hearts until the birthday page is visible
+      if (secondPage.style.display !== "block") return;
+
+      const heart = document.createElement("div");
+
+      heart.className = "heart";
+
+      const hearts = ["🎀", "😋", "✨"];
+
+      heart.innerHTML =
+        hearts[Math.floor(Math.random() * hearts.length)];
+
+      heart.style.left =
+        Math.random() * 100 + "vw";
+
+      heart.style.animationDuration =
+        Math.random() * 4 + 5 + "s";
+
+      heart.style.fontSize =
+        Math.random() * 20 + 15 + "px";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 9000);
+    }
+
+  </script>
+
+</body>
+</html>
+```
